@@ -67,7 +67,9 @@ class Trapezium
   end
 
   def parallel_bases?
-
+    slope_bc = (@c.y - @b.y) / (@c.x - @b.x)
+    slope_ad = (@d.y - @a.y) / (@d.x - @a.x)
+    slope_bc == slope_ad
   end
 
   def equilateral?
@@ -75,31 +77,54 @@ class Trapezium
   end
 
   def area
-    tmp = sides
-    if tmp[:left_lateral] == tmp[:right_lateral]
-      c = tmp[:left_lateral]
-      a = tmp[:larger_basis]
-      b = tmp[:smaller_basis]
-      ((a + b) / 2) * (Math.sqrt((c * c) - ((a - b) * (a - b) / 4)))
-    else
-      puts "Trapezium is not equilateral"
+    if parallel_bases?
+      tmp = sides
+      if tmp[:left_lateral] == tmp[:right_lateral]
+        c = tmp[:left_lateral]
+        a = tmp[:larger_basis]
+        b = tmp[:smaller_basis]
+        ((a + b) / 2) * (Math.sqrt((c * c) - ((a - b) * (a - b) / 4)))
+      else
+        puts "Trapezium is not equilateral"
+      end
     end
-
   end
 
   def perimeter
-    sides[:left_lateral] + sides[:smaller_basis] + sides[:right_lateral] + sides[:smaller_basis]
+    sides[:left_lateral] + sides[:smaller_basis] + sides[:right_lateral] + sides[:larger_basis]
   end
 
   def info
-
+    puts "Info about trapezium:"
+    if parallel_bases?
+      if equilateral?
+        puts "It's equilateral."
+      else
+        puts "It's not equilateral."
+      end
+      puts "All sides:"
+      sides.each do |side_name, length|
+        case side_name
+        when :left_lateral
+          puts "Left lateral length = " + length.to_s
+        when :right_lateral
+          puts "Right lateral length = " + length.to_s
+        when :smaller_basis
+          puts "Smaller basis length = " + length.to_s
+        when :larger_basis
+          puts "Larger basis length = " + length.to_s
+        end
+      end
+      puts "Perimeter = " + perimeter.to_s
+      puts "Area = " + area.to_s
+    else
+      puts "It's not a trapezium:( Try again.."
+    end
   end
 end
 
 trapezium = Trapezium.new
-
+print trapezium.parallel_bases?
 trapezium.replace_points(trapezium.right_horizontal_order)
-print trapezium.sides
-print trapezium.equilateral?
-print trapezium.perimeter
+trapezium.info
 
