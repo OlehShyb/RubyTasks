@@ -1,4 +1,5 @@
 require_relative 'point'
+
 class Trapezium
   attr_accessor :a, :b, :c, :d
 
@@ -27,8 +28,8 @@ class Trapezium
 
   def right_horizontal_order
     x_array = Array.new
-    tmp = Array.new
     order = Array.new
+    tmp = Array.new
 
     x_array.push(@a.x, @b.x, @c.x, @d.x)
     tmp.push(@a.x, @b.x, @c.x, @d.x)
@@ -68,7 +69,8 @@ class Trapezium
 
   def parallel_bases?
     slope_bc = (@c.y - @b.y) / (@c.x - @b.x)
-    slope_ad = (@d.y - @a.y) / (@d.x - @a.x)
+    slope_ad = (@a.y - @d.y) / (@a.x - @d.x)
+    # slope_ad = (@d.y - @a.y) / (@d.x - @a.x)
     slope_bc == slope_ad
   end
 
@@ -77,7 +79,6 @@ class Trapezium
   end
 
   def area
-    if parallel_bases?
       tmp = sides
       if tmp[:left_lateral] == tmp[:right_lateral]
         c = tmp[:left_lateral]
@@ -87,7 +88,6 @@ class Trapezium
       else
         puts "Trapezium is not equilateral"
       end
-    end
   end
 
   def perimeter
@@ -100,7 +100,7 @@ class Trapezium
       if equilateral?
         puts "It's equilateral."
       else
-        puts "It's not equilateral."
+        puts "It's not equilateral.."
       end
       puts "All sides:"
       sides.each do |side_name, length|
@@ -116,7 +116,11 @@ class Trapezium
         end
       end
       puts "Perimeter = " + perimeter.to_s
-      puts "Area = " + area.to_s
+      if area.class == Integer
+        puts "Area = " + area.to_s
+      else
+        puts "I cannot calculate area.."
+      end
     else
       puts "It's not a trapezium:( Try again.."
     end
@@ -124,7 +128,6 @@ class Trapezium
 end
 
 trapezium = Trapezium.new
-print trapezium.parallel_bases?
 trapezium.replace_points(trapezium.right_horizontal_order)
 trapezium.info
 
