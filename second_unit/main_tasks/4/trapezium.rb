@@ -86,7 +86,7 @@ class Trapezium
         b = tmp[:smaller_basis]
         ((a + b) / 2) * (Math.sqrt((c * c) - ((a - b) * (a - b) / 4)))
       else
-        puts "Trapezium is not equilateral"
+        "Trapezium is not equilateral"
       end
   end
 
@@ -116,10 +116,10 @@ class Trapezium
         end
       end
       puts "Perimeter = " + perimeter.to_s
-      if area.class == Integer
-        puts "Area = " + area.to_s
+      if area.class == String
+        puts area.to_s + " I cannot calculate area.."
       else
-        puts "I cannot calculate area.."
+        puts "Area = " + area.to_s
       end
     else
       puts "It's not a trapezium:( Try again.."
